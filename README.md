@@ -1,0 +1,97 @@
+# BWCE GitOps with ArgoCD
+
+This repository serves as the single source of truth for deploying TIBCO BusinessWorks Container Edition (BWCE) applications to Kubernetes via ArgoCD.
+
+## 🎯 Purpose
+The purpose of this repository is to implement a GitOps workflow for BWCE applications. It automates the deployment process, ensures environment consistency, and provides a clear audit trail of all infrastructure changes.
+
+### Core Benefits:
+- **Automated Deployments:** Any change pushed to the manifests is automatically synced to the cluster.
+- **Drift Detection:** ArgoCD monitors the cluster and automatically corrects manual overrides to match the Git state.
+- **Environment Isolation:** Uses dedicated namespaces (e.g., bwce-test) to separate application workloads.
+- **Secure Access:** Configured specifically to work with GitHub Fine-grained Personal Access Tokens (PATs).
+
+---
+
+## 📂 Repository Structure
+- **/bwce-manifests**: This directory contains all Kubernetes resource definitions, including:
+  - `bw-app-deployment.yaml`: The Deployment configuration for the BWCE application.
+- **bwce-argocd-app.yaml**: The ArgoCD Application manifest used to register this project with the ArgoCD controller.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Prerequisites
+- A running Kubernetes cluster (Docker Desktop, K3s, or similar).
+- A GitHub Fine-grained Token with 'Metadata' (Read) and 'Contents' (Read) permissions.
+
+### 2. Infrastructure Setup
+To bootstrap this environment, follow the sequence below:
+1. Install ArgoCD into the `argocd` namespace.
+2. Create the repository secret in the `argocd` namespace using your GitHub PAT and the `x-access-token` username.
+3. Label the secret with `argocd.argoproj.io/secret-type=repository`.
+
+### 3. Application Deployment
+Apply the Application manifest to start the sync:
+`kubectl apply -f bwce-argocd-app.yaml -n argocd`
+
+---
+
+## 🛠 Operation & Maintenance
+
+### Deployment Flow
+The following diagram illustrates how a change (like a log level update) moves from your computer to the running cluster:
+
+```mermaid
+graph LR
+    A[Git Commit: Update Env Var] --> B(GitHub Private Repo)
+    B --> C{ArgoCD Controller}
+    C -->|Detect Change| D[Sync: Update Deployment]
+    
+    subgraph "Namespace: bwce-test"
+    D --> E[Create New Pod]
+    E -->|Health Check| F[Terminate Old Pod]
+    F --> G((Success: Debug Active))
+    end
+
+    style C fill:#f96,stroke:#333
+    style G fill:#9f9,stroke:#333
+```
+
+## 🧪 Testing & Validation
+
+Follow these steps to verify that the GitOps pipeline is working correctly:
+
+### 1. Deploy the ArgoCD Application
+
+Run the following to register the app:
+`kubectl apply -f bwce-argocd-app.yaml -n argocd`
+
+### 2. Update Environment Variables
+Modify `bwce-manifests/bw-app-deployment.yaml` to change the log level:
+
+```yaml
+env:
+- name: BW_LOGLEVEL
+  value: "DEBUG"
+```
+
+### 3. Push to Git
+```bash
+git add .
+git commit -m "test: set log level to DEBUG"
+git push origin main
+```
+
+### 4. Observe the Update
+ArgoCD UI: The application will transition to OutOfSync and then Synced.
+Kubernetes: A new Pod will be created. Verify the env var with: `kubectl exec -it <pod-name> -n bwce-test -- env | grep BW_LOGLEVEL`
+
+![Screen](./img/screen.png)
+
+## 📝 Configuration Details
+- ArgoCD Namespace: argocd
+- Application Namespace: bwce-test
+- Sync Policy: Automated (Prune: True, SelfHeal: True)
+- Target Revision: HEAD

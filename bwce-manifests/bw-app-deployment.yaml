@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bwce-app-deployment
+  labels:
+    app: bwce-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bwce-app
+  template:
+    metadata:
+      labels:
+        app: bwce-app
+    spec:
+      containers:
+      - name: bwce-container
+        image: my-bw-app:6.12.0
+        imagePullPolicy: IfNotPresent 
+        
+        env:
+        - name: LICENSE_SOURCE
+          value: "/data/license"
+        - name: BW_PROFILE
+          value: token
+        - name: BW_LOGLEVEL
+          value: INFO
+        ports:
+        - containerPort: 8080 # Make sure this matches the port your /_ping endpoint runs on
+        
+        # --- NEW: Readiness and Liveness Probes ---
+        readinessProbe:
+          httpGet:
+            path: /_ping
+            port: 7777
+          initialDelaySeconds: 30 # Gives BWCE time to start before checking
+          periodSeconds: 10       # Checks every 10 seconds
+          failureThreshold: 3     # Fails after 3 unsuccessful attempts
+          
+        livenessProbe:
+          httpGet:
+            path: /_ping
+            port: 7777
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          failureThreshold: 3
+        # ------------------------------------------
+
+        volumeMounts:
+        - name: license-volume
+          mountPath: /data/license
+          readOnly: true
+          
+      volumes:
+      - name: license-volume
+        secret:
+          secretName: my-license-secret

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bwce-app-testing
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/dmassimi/argocd-bwce.git
+    targetRevision: main
+    path: bwce-manifests/  # Points only to the folder with the app resources
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bwce-test 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
