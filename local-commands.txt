@@ -57,9 +57,10 @@ $pw = kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.da
 
 ## 5. Deploy the Application
 # Create secret and Apply the Application manifest
-cd C:\Users\dmassimi\containers\argocd-bwce\argocd-apps
-kubectl.exe apply -f .\my-license-secret.yaml -n bwce-test
+
 cd C:\Users\dmassimi\containers\argocd-bwce\bwce-manifests
+kubectl.exe apply -f .\my-license-secret.yaml -n bwce-test
+cd C:\Users\dmassimi\containers\argocd-bwce\argocd-apps
 kubectl apply -f bwce-argocd-app.yaml -n argocd
 
 # Start the Port Forward
