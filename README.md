@@ -16,6 +16,7 @@ The purpose of this repository is to implement a GitOps workflow for BWCE applic
 ## 📂 Repository Structure
 - **/bwce-manifests**: This directory contains all Kubernetes resource definitions, including:
   - `bw-app-deployment.yaml`: The Deployment configuration for the BWCE application.
+  - `my-license-secret.yaml`: The Secret to save license file used by BWCE application.
 - **bwce-argocd-app.yaml**: The ArgoCD Application manifest used to register this project with the ArgoCD controller.
 
 ---
@@ -25,6 +26,7 @@ The purpose of this repository is to implement a GitOps workflow for BWCE applic
 ### 1. Prerequisites
 - A running Kubernetes cluster (Docker Desktop, K3s, or similar).
 - A GitHub Fine-grained Token with 'Metadata' (Read) and 'Contents' (Read) permissions.
+- A valid license base64 file in `./bwce-manifest/my-secret-license`
 
 ### 2. Infrastructure Setup
 To bootstrap this environment, follow the sequence below:
@@ -61,7 +63,7 @@ graph LR
 
 ## 🧪 Testing & Validation
 
-Follow these steps to verify that the GitOps pipeline is working correctly:
+Follow these steps to verify that the GitOps pipeline is working correctly (file local-commands.txt contains all commands executed in terminal):
 
 ### 1. Deploy the ArgoCD Application
 
