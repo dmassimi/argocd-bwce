@@ -68,7 +68,7 @@ Follow these steps to verify that the GitOps pipeline is working correctly (file
 ### 1. Deploy the ArgoCD Application
 
 Run the following to register the app:
-`kubectl apply -f bwce-argocd-app.yaml -n argocd`
+`kubectl apply -f argocd-apps/bwce-argocd-app.yaml -n argocd`
 
 ### 2. Update Environment Variables
 Modify `bwce-manifests/bw-app-deployment.yaml` to change the log level:
