@@ -82,7 +82,7 @@ env:
 ### 3. Push to Git
 ```bash
 git add .
-git commit -m "test: set log level to DEBUG"
+git commit -m "update env var log"
 git push origin main
 ```
 
