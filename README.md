@@ -67,7 +67,7 @@ graph LR
     subgraph "Namespace: bwce-test"
     D --> E[Create New Pod]
     E -->|Health Check| F[Terminate Old Pod]
-    F --> G((Success: Debug Active))
+    F --> G((New Pod Started: Debug Active))
     end
 
 %% Apply more colors using style classes or individual styles
