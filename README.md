@@ -89,7 +89,7 @@ git push origin main
 
 ### 4. Observe the Update
 ArgoCD UI: The application will transition to OutOfSync and then Synced.
-Kubernetes: A new Pod will be created. Verify the env var with: `kubectl exec -it <pod-name> -n bwce-test -- env | grep BW_LOGLEVEL`
+Kubernetes: A new Pod will be created (in RED). Verify the env var with: `kubectl exec -it <pod-name> -n bwce-test -- env | grep BW_LOGLEVEL`
 
 ![Screen](./img/screen.png)
 
