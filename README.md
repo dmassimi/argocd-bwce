@@ -17,7 +17,8 @@ The purpose of this repository is to implement a GitOps workflow for BWCE applic
 - **/bwce-manifests**: This directory contains all Kubernetes resource definitions, including:
   - `bw-app-deployment.yaml`: The Deployment configuration for the BWCE application.
   - `my-license-secret.yaml`: The Secret to save license file used by BWCE application.
-- **/argocd-apps/bwce-argocd-app.yaml**: The ArgoCD Application manifest used to register this project with the ArgoCD controller.
+- **/argocd-apps**
+  - `bwce-argocd-app.yaml`: The ArgoCD Application manifest used to register this project with the ArgoCD controller.
 
 ---
 
