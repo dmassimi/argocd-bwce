@@ -47,6 +47,18 @@ Apply the Application manifest to start the sync:
 The following diagram illustrates how a change (like a log level update) moves from your computer to the running cluster:
 
 ```mermaid
+%%{init: {
+  'theme': 'base', 
+  'look': 'handDrawn', 
+  'themeVariables': { 
+    'fontFamily': 'Comic Sans MS, cursive',
+    'primaryColor': '#ffffff',
+    'mainBkg': '#ffffff',
+    'lineColor': '#444444'
+  }
+}}%%
+
+%%{init: {'theme': 'neutral'}}%%
 graph LR
     A[Git Commit: Update Env Var] --> B(GitHub Private Repo)
     B --> C{ArgoCD Controller}
@@ -58,8 +70,14 @@ graph LR
     F --> G((Success: Debug Active))
     end
 
-    style C fill:#f96,stroke:#333
-    style G fill:#9f9,stroke:#333
+%% Apply more colors using style classes or individual styles
+    style A fill:#a2d2ff,stroke:#0056b3,stroke-width:2px,rx:10,ry:10,color:#000
+    style B fill:#d8f3dc,stroke:#2d6a4f,stroke-width:2px,rx:10,ry:10,color:#000
+    style C fill:#f96,stroke:#a33b00,stroke-width:3px,color:#000,font-weight:bold
+    style D fill:#ffb703,stroke:#e85d04,stroke-width:2px,rx:10,ry:10,color:#000
+    style E fill:#e6ccb2,stroke:#a68a64,stroke-width:2px,rx:10,ry:10,color:#000
+    style F fill:#ffcccc,stroke:#cc0000,stroke-width:2px,rx:10,ry:10,color:#000
+    style G fill:#9f9,stroke:#008000,stroke-width:3px,color:#000,font-weight:bold
 ```
 
 ## 🧪 Testing & Validation
