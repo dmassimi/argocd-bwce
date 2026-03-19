@@ -60,14 +60,14 @@ The following diagram illustrates how a change (like a log level update) moves f
 
 %%{init: {'theme': 'neutral'}}%%
 graph LR
-    A[Git Commit: Update Env Var] --> B(GitHub Private Repo)
+    A[Git Commit: Update Env Var Log = Debug] --> B(GitHub Private Repo)
     B --> C{ArgoCD Controller}
     C -->|Detect Change| D[Sync: Update Deployment]
     
     subgraph "Namespace: bwce-test"
     D --> E[Create New Pod]
     E -->|Health Check| F[Terminate Old Pod]
-    F --> G((New Pod Started: Debug Active))
+    F --> G((New Pod Started: Log = Debug ))
     end
 
 %% Apply more colors using style classes or individual styles
