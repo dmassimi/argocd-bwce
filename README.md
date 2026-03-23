@@ -1,6 +1,6 @@
 # BWCE GitOps with ArgoCD
 
-This repository serves as the single source of truth for deploying TIBCO BusinessWorks Container Edition (BWCE) applications to Kubernetes via ArgoCD.
+This repository is a **sample** designed to demonstrate how to deploy TIBCO BusinessWorks Container Edition (BWCE) applications to Kubernetes using ArgoCD. It serves as a blueprint for implementing a GitOps workflow.
 
 ## 🎯 Purpose
 The purpose of this repository is to implement a GitOps workflow for BWCE applications. It automates the deployment process, ensures environment consistency, and provides a clear audit trail of all infrastructure changes.
@@ -28,6 +28,7 @@ The purpose of this repository is to implement a GitOps workflow for BWCE applic
 - A running Kubernetes cluster (Docker Desktop, K3s, or similar).
 - A GitHub Fine-grained Token with 'Metadata' (Read) and 'Contents' (Read) permissions.
 - A valid license base64 file in `./bwce-manifest/my-secret-license`
+- BW images built locally (in my case is my-bw-app:6.12.0. Base image used: BW 6.12)
 
 ### 2. Infrastructure Setup
 To bootstrap this environment, follow the sequence below:
