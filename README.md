@@ -83,6 +83,8 @@ graph LR
 
 ## 🧪 Testing & Validation
 
+**Test Case**: Environment variable update. Changing LOG from INFO to DEBUG in Git to verify ArgoCD's automated synchronization and the subsequent Pod restart in K8s.
+
 Follow these steps to verify that the GitOps pipeline is working correctly (file local-commands.txt contains all commands executed in terminal):
 
 ### 1. Deploy the ArgoCD Application
@@ -96,7 +98,7 @@ Modify `bwce-manifests/bw-app-deployment.yaml` to change the log level:
 ```yaml
 env:
 - name: BW_LOGLEVEL
-  value: "DEBUG"
+  value: "DEBUG" #-->Previous value was INFO
 ```
 
 ### 3. Push to Git
