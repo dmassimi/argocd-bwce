@@ -10,7 +10,7 @@ spec:
     targetRevision: main
     path: bwce-manifests/
     directory:
-      exclude: 'my-license-secret.yaml' # This is the magic line!
+      exclude: 'my-license-secret.yaml'
   destination:
     server: https://kubernetes.default.svc
     namespace: bwce-test 
