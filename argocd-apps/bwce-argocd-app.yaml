@@ -4,6 +4,13 @@ metadata:
   name: bwce-app-testing
   namespace: argocd
 spec:
+  ignoreDifferences:
+  - group: ""
+    kind: Secret
+    name: my-license-secret
+    namespace: bwce-test
+    jsonPointers:
+    - /data
   project: default
   source:
     repoURL: https://github.com/dmassimi/argocd-bwce.git
