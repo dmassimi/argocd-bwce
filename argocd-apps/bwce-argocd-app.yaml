@@ -4,18 +4,13 @@ metadata:
   name: bwce-app-testing
   namespace: argocd
 spec:
-  source:
-    repoURL: https://github.com/dmassimi/argocd-bwce.git
-    targetRevision: main
-    path: bwce-manifests/
-    # ADD THIS SECTION:
-    directory:
-      exclude: 'my-license-secret.yaml'
   project: default
   source:
     repoURL: https://github.com/dmassimi/argocd-bwce.git
     targetRevision: main
-    path: bwce-manifests/  # Points only to the folder with the app resources
+    path: bwce-manifests/
+    directory:
+      exclude: 'my-license-secret.yaml' # This is the magic line!
   destination:
     server: https://kubernetes.default.svc
     namespace: bwce-test 
